@@ -1,74 +1,69 @@
 import React, { Component } from 'react'
 import Avatar from '../components/Avatar'
-import topsplash from '../static/topsplash.jpg'
 
+import { withTheme } from 'styled-components'
+import topsplash from '../static/images/topsplash.jpg'
 import styled from 'styled-components'
-import Parallax from '../parallax'
 
 const Layout = styled.div`
   display: grid;
   grid-template-columns: [topsplash-start lowercontent-start] auto [avatar] auto auto [lowercontent-end topsplash-end];
   justify-content: space-between;
-  grid-template-rows: [topsplash-start] 330px [avatar] 110px [lowercontent-start] auto ;
+  grid-template-rows: [topsplash-start] ${props => props.theme.AboutMe.avatarGridTop} [avatar] ${props => props.theme.AboutMe.avatarGridBottom} [lowercontent-start] ;
   height: 1000px;
 `
-
-
-
 const TopSplash = styled.div`
   background-image: url(${topsplash});
-  height: 400px;
+  margin-top: ${props => props.marginTop};
+  height: ${props => props.theme.AboutMe.topsplashHeight};
   width: 100%;
   position: fixed;
-  margin-top: ${props => props.marginTop}px;
   padding-left: 20px;
   grid-area: topsplash;
-  * {
-    color: white;
-    opacity: 0.8;
-  }
 `
-
 const StyledAvatar = styled(Avatar)`
   grid-area: avatar;
   z-index: 3;
 `
-
 const LowerContent = styled.div`
   background-color: white;
   grid-area: lowercontent;
   z-index: 2;
 `
-
-
-
-export default class AboutMe extends Component {
+class AboutMe extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      scrollTop: 40
+      topSplashMarginTop: props.theme.AboutMe.marginTop
     }
-    this.parallax = new Parallax(this)
+
+    this.eventHandlers = {
+      topSplashMarginTopHandler: () => {
+        let topSplashMarginTop = `${document.documentElement.scrollTop * - 0.5 + 40}px`
+        this.setState({topSplashMarginTop})
+      }
+    }
   }
 
   componentDidMount () {
-    window.addEventListener('scroll', () => {
-      let scrollTop = document.documentElement.scrollTop * - 0.5 + 40
-      this.setState({scrollTop})
-    }, true)
+    for(const[key, handler] of Object.entries(this.eventHandlers)) {
+      window.addEventListener('scroll', handler, true)
+    }
   }
 
   componentWillUnmount() {
-    // window.removeEvent
+    for(const[key, handler] of Object.entries(this.eventHandlers)) {
+      window.removeEventListener('scroll', handler, true)
+    }
   }
-  
-  
+
   render() {
     
     return (
       <Layout>
-        <TopSplash marginTop={this.state.scrollTop}>
-            <h1>Landing Page</h1>
+        <TopSplash marginTop={this.state.topSplashMarginTop}>
+            <h1>Arjun Ray</h1>
+            <h2>Web Developer // Data Scientist</h2>
         </TopSplash>
         <StyledAvatar />
         <LowerContent />
@@ -77,4 +72,4 @@ export default class AboutMe extends Component {
   }
 }
 
-
+export default withTheme(AboutMe)

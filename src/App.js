@@ -2,6 +2,10 @@ import React, { Component } from 'react'
 import Header from './components/Header'
 import Footer from './components/Footer'
 import AboutMe from './pages/AboutMe'
+import Experience from './pages/Experience'
+import Contact from './pages/Contact'
+import Blog from './pages/Blog'
+
 import {
   BrowserRouter as Router,
   Route,
@@ -9,29 +13,49 @@ import {
 } from 'react-router-dom'
 
 import { ThemeProvider } from 'styled-components';
+// import './static/styles/App.css'
+
+const headerHeight = 40
+const topsplashHeight = 200
+const avatarSize = 200
+const avatarBorder = 20
 
 const theme = {
-  header: {
-    height: '40px',
-    bgColor: 'black',
+  Header: {
+    height: `${headerHeight}px`,
+    background: 'black',
     color: 'white',
-    hoverBgColor: 'grey',
-    selectedColor: 'red'
+    hoverBackground: 'grey',
+    cSelectedColor: 'red',
+    fontFamily: "'Titillium Web', sans-serif",
   },
+  AboutMe: {
+    topsplashHeight: `${topsplashHeight}px`,
+    marginTop: `${headerHeight}px`,
+    avatarGridTop: `${headerHeight + topsplashHeight - (avatarSize + 2 * avatarBorder) / 2}px`,
+    avatarGridBottom: `${(avatarSize + 2 * avatarBorder)}px`
+  },
+  Experience: {
+    marginTop: `${headerHeight}px`,
+  },
+  Contact: {
+    marginTop: `${headerHeight}px`,
+  },
+  Blog: {
+    marginTop: `${headerHeight}px`,
+  },
+  Avatar: {
+    size: `${avatarSize}px`,
+    borderWidth: `${avatarBorder}px`,
+    borderColor: 'white',
+    borderStyle: 'solid'
+  }
 
 }
 
 const NotFound = () => (
   <div> 404 NOT FOUND! </div>
 ) 
-
-const Main = ({ match }) => (
-  <div>
-    <Header />
-    <Route path={`${match.url}/aboutme`} component={AboutMe}/>
-    <Footer />
-  </div>
-)
 
 const framed = (FramedComponent) => {
   return (
@@ -43,9 +67,6 @@ const framed = (FramedComponent) => {
   )
 }
 
-const Contact = () => <div>sdsdsd</div>
-const Experience = () => <div>sdsdsd</div>
-
 export default class App extends Component {
   render() {
     return (
@@ -54,9 +75,10 @@ export default class App extends Component {
             <div className="App">
               <Switch>
                 <Route exact path="/" component={() => framed(AboutMe)} />
-                <Route path="/aboutme" component={() => framed(AboutMe)} />
-                <Route path="/experience" component={() => framed(Experience)} />
-                <Route path="/contact" component={() => framed(Contact)} />
+                <Route exact path="/aboutme" component={() => framed(AboutMe)} />
+                <Route exact path="/experience" component={() => framed(Experience)} />
+                <Route exact path="/contact" component={() => framed(Contact)} />
+                <Route path="/blog" component={() => framed(Blog)} />
                 <Route component={NotFound} />
               </Switch>
             </div>
