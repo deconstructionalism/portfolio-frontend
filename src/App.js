@@ -1,21 +1,74 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from 'react'
+import Header from './components/Header'
+import Footer from './components/Footer'
+import AboutMe from './pages/AboutMe'
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch
+} from 'react-router-dom'
 
-class App extends Component {
+import { ThemeProvider } from 'styled-components';
+
+const theme = {
+  header: {
+    height: '40px',
+    bgColor: 'black',
+    color: 'white',
+    hoverBgColor: 'grey',
+    selectedColor: 'red'
+  },
+
+}
+
+const NotFound = () => (
+  <div> 404 NOT FOUND! </div>
+) 
+
+const Main = ({ match }) => (
+  <div>
+    <Header />
+    <Route path={`${match.url}/aboutme`} component={AboutMe}/>
+    <Footer />
+  </div>
+)
+
+const framed = (FramedComponent) => {
+  return (
+    <div>
+      <Header />
+      <FramedComponent />
+      <Footer />
+    </div>
+  )
+}
+
+const Contact = () => <div>sdsdsd</div>
+const Experience = () => <div>sdsdsd</div>
+
+export default class App extends Component {
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-      </div>
-    );
+      <ThemeProvider theme={theme}>
+        <Router>
+            <div className="App">
+              <Switch>
+                <Route exact path="/" component={() => framed(AboutMe)} />
+                <Route path="/aboutme" component={() => framed(AboutMe)} />
+                <Route path="/experience" component={() => framed(Experience)} />
+                <Route path="/contact" component={() => framed(Contact)} />
+                <Route component={NotFound} />
+              </Switch>
+            </div>
+        </Router>
+      </ThemeProvider>
+    )
   }
 }
 
-export default App;
+/*
+Z indices
+HEADER: 10
+AVATAR: 3
+LOWERCONTENT: 2
+*/
