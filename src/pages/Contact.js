@@ -6,7 +6,7 @@ const Layout = styled.div`
   display: grid;
   grid-template-columns: [topsplash-start lowercontent-start] auto [avatar] auto auto [lowercontent-end topsplash-end];
   justify-content: space-between;
-  grid-template-rows: [topsplash-start] ${props => props.theme.AboutMe.avatarGridTop} [avatar] ${props => props.theme.AboutMe.avatarGridBottom} [lowercontent-start] ;
+  grid-template-rows: [topsplash-start] ${props => props.theme.About.avatarGridTop} [avatar] ${props => props.theme.About.avatarGridBottom} [lowercontent-start] ;
   height: 1000px;
 `
 

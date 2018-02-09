@@ -6,20 +6,20 @@ const Layout = styled.div`
   display: grid;
   grid-template-columns: [topsplash-start lowercontent-start] auto [avatar] auto auto [lowercontent-end topsplash-end];
   justify-content: space-between;
-  grid-template-rows: [topsplash-start] ${props => props.theme.About.avatarGridTop} [avatar] ${props => props.theme.About.avatarGridBottom} [lowercontent-start] ;
+  grid-template-rows: [topsplash-start] ${props => props.theme.Code.avatarGridTop} [avatar] ${props => props.theme.Code.avatarGridBottom} [lowercontent-start] ;
   height: 1000px;
 `
 
 const Contents = styled.div`
-  margin-top: ${props => props.theme.Experience.marginTop}
+  margin-top: ${props => props.theme.Blog.marginTop}
 `
 
-export default class Experience extends Component {
+export default class Code extends Component {
   render() {
     return (
       <Layout>
         <Contents>
-          Experience
+          Contact
         </Contents>
       </Layout>
     )
